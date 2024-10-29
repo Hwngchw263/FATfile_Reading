@@ -9,10 +9,11 @@ typedef enum {
 
 ProcessStatus_t Open_FAT_File(const char* path);
 ProcessStatus_t Close_FAT_File();
-void Read_FAT_file();
+ProcessStatus_t Read_FAT_file();
 ProcessStatus_t Read_Boot_blockArea(BootSector_Type *bootsector);
-void Read_File_allocation_tableArea();
-void Read_Root_DirectoryArea();
+ProcessStatus_t Read_File_allocation_tableArea();
+ProcessStatus_t Read_Root_DirectoryArea(BootSector_Type *bootsector, DirectoryEntry_Type *rootdirectory);
+ProcessStatus_t Read_Entry();
 void Read_DataArea();
 
 #endif
