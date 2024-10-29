@@ -30,4 +30,32 @@ typedef struct{
 
 }BootSector_Type;
 
+
+typedef enum {
+    UNALLOCATED = 0x00000000,       // 0 - unallocated
+    BAD_CLUSTER_12 = 0x00000FF7,    // 0xFF7 (for FAT12)
+    BAD_CLUSTER_16 = 0x0000FFF7,    // 0xFFF7 (for FAT16)
+    BAD_CLUSTER_32 = 0x0FFFFFF7,    // 0xFFFF FFF7 (for FAT32)
+    EOF_CLUSTER_12 = 0x00000FF8,    // 0xFF8 (for FAT12, end of file)
+    EOF_CLUSTER_16 = 0x0000FFF8,    // 0xFFF8 (for FAT16, end of file)
+    EOF_CLUSTER_32 = 0x0FFFFFF8     // 0xFFFF FFF8 (for FAT32, end of file)
+} FATClusterStatus;
+
+//FATEntry type show the cluster is bad, end of file, allocated or unlocated
+typedef struct{
+    FATClusterStatus state;
+    uint8_t next_cluster_num;
+}FATEntry_Type;
+
+typedef struct {
+    char filename[8];         // 0x00 - Filename (8 bytes)
+    char extension[3];        // 0x08 - Filename extension (3 bytes)
+    uint8_t attributes;       // 0x0b - File attributes (1 byte)
+    uint8_t reserved[10];     // 0x0c - Reserved (10 bytes)
+    uint16_t time;            // 0x16 - Time created or last updated (2 bytes)
+    uint16_t date;            // 0x18 - Date created or last updated (2 bytes)
+    uint16_t startCluster;    // 0x1a - Starting cluster number for file (2 bytes)
+    uint32_t fileSize;        // 0x1c - File size in bytes (4 bytes)
+} DirectoryEntry_Type;
+
 #endif
